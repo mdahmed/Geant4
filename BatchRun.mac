@@ -1,0 +1,74 @@
+# Macro file for the initialization of example B1
+# in interactive session
+#
+# Set some default verbose
+/control/verbose 0
+/control/saveHistory
+/run/verbose 0
+# 
+# Can be run in batch, without graphic
+# or interactively: Idle> /control/execute run1.mac
+#
+# Change the default number of workers (in multi-threading mode) 
+/run/numberOfThreads 8
+
+# activating livermore processes
+/phys/addPhysics emlivermore
+# Setting production edges 
+/cuts/setLowEdge 250 eV
+#
+/run/initialize
+
+#setting cuts
+#/phys/setGCut  1 nm
+#/phys/setECut  1 nm
+
+/run/setCut  1000 nm
+
+#/process/inactivate compt
+#/process/inactivate conv
+#/process/inactivate Rayl
+#/process/inactivate GammaToMuPair
+
+# Set Geometry parameters
+# Filter 1 properties
+/XFCT/det/setFilter1Material G4_Sn
+/XFCT/det/setFilter1Thickness 0.1 cm
+
+# Filter 2 properties
+/XFCT/det/setFilter2Material G4_AIR
+/XFCT/det/setFilter2Thickness 0.1 cm
+
+# Filter to sample distance
+/XFCT/det/FilterToSmplDis 2. cm
+
+# Sample to detector distance
+/XFCT/det/distance 10. cm
+
+# Concentral of nano particle solution (0 - 1)
+/XFCT/det/setNanoConc 0.01
+
+# Set collimator properties
+/XFCT/det/setCollRadius 0.25 cm
+/XFCT/det/setCollThickness 4. cm
+#
+# Choose point source with zero divergence or Cone beam
+/gun/coneBeam on
+
+# Choose particle type
+/gun/particle gamma
+
+# If monoenergetic, choose energy
+/gun/energy 125 keV
+
+# Provide input gun spectrum
+#/gun/spectrum on
+#
+/run/initialize
+#
+/analysis/setFileName photoelec
+/analysis/h1/set 1 240 10. 90. keV	#energy spectrum  
+
+/run/printProgress 20000
+#/run/beamOn 1000000000000
+/run/beamOn 100
